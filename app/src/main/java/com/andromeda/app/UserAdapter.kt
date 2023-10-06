@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class UserAdapter(private val userList: List<UserModel>) :
+class UserAdapter(private val userList: List<UserModel>, private val listener: OnAdapterListener) :
     RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -23,12 +23,22 @@ class UserAdapter(private val userList: List<UserModel>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name.text = userList[position].name
-        holder.desc.text = userList[position].desc
-        holder.image.setImageResource(userList[position].image)
+        val user = userList[position]
+
+        holder.name.text = user.name
+        holder.desc.text = user.desc
+        holder.image.setImageResource(user.image)
+
+        holder.itemView.setOnClickListener {
+            listener.onClick(user)
+        }
     }
 
     override fun getItemCount(): Int {
         return  userList.size
+    }
+
+    interface OnAdapterListener {
+        fun onClick(user: UserModel)
     }
 }

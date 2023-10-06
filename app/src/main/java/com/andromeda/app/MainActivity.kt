@@ -2,6 +2,7 @@ package com.andromeda.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +23,12 @@ class MainActivity : AppCompatActivity() {
             UserModel(R.drawable.user_female, "Santi", "My Friend"),
         )
 
-        val userAdapter = UserAdapter(users)
+        val userAdapter = UserAdapter(users, object: UserAdapter.OnAdapterListener{
+            override fun onClick(user: UserModel) {
+                Toast.makeText(this@MainActivity, user.name, Toast.LENGTH_SHORT).show()
+            }
+        })
+
         findViewById<RecyclerView>(R.id.recycler_view).adapter = userAdapter
 
     }
